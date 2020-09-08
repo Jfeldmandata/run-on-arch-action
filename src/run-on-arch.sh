@@ -46,7 +46,8 @@ build_container () {
   # cached between builds.
   if [[ -z "${GITHUB_TOKEN:-}" ]]
   then
-    docker build . \
+    docker build \
+      "${ACTION_DIR}/../Dockerfiles" \
       --file "$DOCKERFILE" \
       --tag "${CONTAINER_NAME}:latest"
   else
@@ -66,7 +67,8 @@ build_container () {
     set "$BASH_FLAGS"
 
     docker pull "$PACKAGE_REGISTRY:latest" || true
-    docker build . \
+    docker build \
+      "${ACTION_DIR}/../Dockerfiles" \
       --file "$DOCKERFILE" \
       --tag "${CONTAINER_NAME}:latest" \
       --cache-from="$PACKAGE_REGISTRY"
