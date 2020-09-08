@@ -42,23 +42,19 @@ async function main() {
   }
 
   // Write install commands to a script file for running in the Dockerfile
-  let install = core.getInput('install');
-  install = ```#!${shell}
-  set -eu
-  export DEBIAN_FRONTEND=noninteractive
-  ${install}
-  ```;
+  const install = ```#!${shell}
+set -eu;
+export DEBIAN_FRONTEND=noninteractive;
+${core.getInput('install')}```;
   fs.writeFileSync(
     path.join(__dirname, 'run-on-arch-install.sh'),
     install,
   );
 
   // Write container commands to a script file for running
-  let commands = core.getInput('run', { required: true });
-  commands = ```#!${shell}
-  set -eu;
-  ${commands}
-  ```;
+  const commands = ```#!${shell}
+set -eu;
+${core.getInput('run', { required: true })}```;
   fs.writeFileSync(
     path.join(__dirname, 'run-on-arch-commands.sh'),
     commands,
