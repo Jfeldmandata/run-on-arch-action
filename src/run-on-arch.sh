@@ -42,6 +42,8 @@ install_deps () {
 build_container () {
   # Build the container image.
 
+  cd "${ACTION_DIR}"
+
   # If the GITHUB_TOKEN env var has a value, the container images will be
   # cached between builds.
   if [[ -z "${GITHUB_TOKEN:-}" ]]
@@ -70,6 +72,8 @@ build_container () {
     docker tag "${CONTAINER_NAME}:latest" "$PACKAGE_REGISTRY" \
       && docker push "$PACKAGE_REGISTRY" || true
   fi
+
+  cd - &>/dev/null
 }
 
 run_container () {
