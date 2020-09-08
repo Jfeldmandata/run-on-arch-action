@@ -48,8 +48,7 @@ build_container () {
   then
     docker build . \
       --file "$DOCKERFILE" \
-      --tag "${CONTAINER_NAME}:latest" \
-      --build-arg ACTION_DIR="${ACTION_DIR}"
+      --tag "${CONTAINER_NAME}:latest"
   else
     # Build optimization that uses GitHub package registry to cache docker
     # images, based on Thai Pangsakulyanont's experiments.
@@ -70,8 +69,7 @@ build_container () {
     docker build . \
       --file "$DOCKERFILE" \
       --tag "${CONTAINER_NAME}:latest" \
-      --cache-from="$PACKAGE_REGISTRY" \
-      --build-arg ACTION_DIR="${ACTION_DIR}"
+      --cache-from="$PACKAGE_REGISTRY"
     docker tag "${CONTAINER_NAME}:latest" "$PACKAGE_REGISTRY" \
       && docker push "$PACKAGE_REGISTRY" || true
   fi

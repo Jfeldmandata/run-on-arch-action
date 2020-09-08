@@ -47,7 +47,8 @@ async function main() {
     core.getInput('install'),
   ].join('\n');
   fs.writeFileSync(
-    path.join(__dirname, 'run-on-arch-install.sh'),
+    // Must be in same directory as Dockerfiles
+    path.join(__dirname, '..', 'Dockerfiles', 'run-on-arch-install.sh'),
     install,
   );
 

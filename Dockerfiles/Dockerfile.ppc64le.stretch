@@ -1,5 +1,4 @@
 FROM ppc64le/debian:stretch
 
-ARG ACTION_DIR=.
-COPY ${ACTION_DIR}/src/run-on-arch-install.sh /root/run-on-arch-install.sh
+COPY run-on-arch-install.sh /root/run-on-arch-install.sh
 RUN chmod +x /root/run-on-arch-install.sh && /root/run-on-arch-install.sh
