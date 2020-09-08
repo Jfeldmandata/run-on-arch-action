@@ -47,7 +47,7 @@ build_container () {
   if [[ -z "${GITHUB_TOKEN:-}" ]]
   then
     docker build \
-      "${ACTION_DIR}/../Dockerfiles" \
+      "${ACTION_DIR}/Dockerfiles" \
       --file "$DOCKERFILE" \
       --tag "${CONTAINER_NAME}:latest"
   else
@@ -68,7 +68,7 @@ build_container () {
 
     docker pull "$PACKAGE_REGISTRY:latest" || true
     docker build \
-      "${ACTION_DIR}/../Dockerfiles" \
+      "${ACTION_DIR}/Dockerfiles" \
       --file "$DOCKERFILE" \
       --tag "${CONTAINER_NAME}:latest" \
       --cache-from="$PACKAGE_REGISTRY"
