@@ -42,13 +42,14 @@ install_deps () {
 build_container () {
   # Build the container image.
 
-  cd "${ACTION_DIR}"
-
   # If the GITHUB_TOKEN env var has a value, the container images will be
   # cached between builds.
   if [[ -z "${GITHUB_TOKEN:-}" ]]
   then
-    docker build . --file "$DOCKERFILE" --tag "${CONTAINER_NAME}:latest"
+    docker build . \
+      --file "$DOCKERFILE" \
+      --tag "${CONTAINER_NAME}:latest" \
+      --build-arg ACTION_DIR="${ACTION_DIR}"
   else
     # Build optimization that uses GitHub package registry to cache docker
     # images, based on Thai Pangsakulyanont's experiments.
@@ -66,14 +67,14 @@ build_container () {
     set "$BASH_FLAGS"
 
     docker pull "$PACKAGE_REGISTRY:latest" || true
-    docker build . --file "$DOCKERFILE" \
+    docker build . \
+      --file "$DOCKERFILE" \
       --tag "${CONTAINER_NAME}:latest" \
-      --cache-from="$PACKAGE_REGISTRY"
+      --cache-from="$PACKAGE_REGISTRY" \
+      --build-arg ACTION_DIR="${ACTION_DIR}"
     docker tag "${CONTAINER_NAME}:latest" "$PACKAGE_REGISTRY" \
       && docker push "$PACKAGE_REGISTRY" || true
   fi
-
-  cd - &>/dev/null
 }
 
 run_container () {
