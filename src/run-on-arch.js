@@ -43,8 +43,7 @@ async function main() {
 
   // Write install commands to a script file for running in the Dockerfile
   let install = core.getInput('install');
-  install = ```
-  #!${shell}
+  install = ```#!${shell}
   set -eu
   export DEBIAN_FRONTEND=noninteractive
   ${install}
@@ -56,8 +55,7 @@ async function main() {
 
   // Write container commands to a script file for running
   let commands = core.getInput('run', { required: true });
-  commands = ```
-  #!${shell}
+  commands = ```#!${shell}
   set -eu;
   ${commands}
   ```;
