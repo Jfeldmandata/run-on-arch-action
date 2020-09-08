@@ -35,6 +35,10 @@ inputs:
     description: 'Shell commands to execute on the host before running the container, such as creating directories for volume mappings. See README for example usage.'
     required: false
     default: ''
+  install:
+    description: 'zzz'
+    required: false
+    default: ''
 
 runs:
   using: 'node12'
