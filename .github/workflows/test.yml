@@ -134,8 +134,8 @@ jobs:
       run: |
         git_path="${{ steps.build.outputs.git_path }}"
 
-        echo "Assert git path: '$git_path' == '/usr/local/bin/git'"
-        test "$git_path" == "/usr/local/bin/git"
+        echo "Assert git path: '$git_path' == '/usr/bin/git'"
+        test "$git_path" == "/usr/bin/git"
 
     - name: Assert job would fail on setup script error
       run: |
