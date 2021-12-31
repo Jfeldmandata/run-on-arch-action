@@ -1,0 +1,28 @@
+name: Update floating tag
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  update-tag:
+    runs-on: ubuntu-latest
+    name: Update floating tag
+    steps:
+      - uses: actions/checkout@v2
+      - name: Tag and push
+        shell: bash -l {0}
+        run: |
+          set -euxo pipefail
+
+          # parse 'v2' from 'v2.0.1'
+          tag=$(echo $GITHUB_REF | python -c 'import sys; print(sys.stdin.read().split("/")[-1].split(".")[0])')
+
+          # delete existing floating tag
+          git tag --delete "$tag" || true
+          git push origin ":$tag"
+
+          # tag and push
+          git tag "$tag"
+          git push origin "$tag"
