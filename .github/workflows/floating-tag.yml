@@ -1,0 +1,29 @@
+name: Update floating tag
+
+on:
+  push:
+    tags:
+      # Only match vXX.YY.ZZ tags
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  update-tag:
+    runs-on: ubuntu-latest
+    name: Update floating tag
+    steps:
+      - uses: actions/checkout@v2
+      - uses: fregante/setup-git-user@v1
+      - name: Tag and push
+        run: |
+          # Parse tag name, e.g. "v2" from "refs/tags/v2.22.12"
+          parse='import sys; print(sys.argv[1].split("/")[-1].split(".")[0])'
+          tag=$(python -c "$parse" "$GITHUB_REF")
+
+          # Create an arbitrary commit that skips CI.
+          # Prevents error: "! [remote rejected] (refusing to allow a GitHub App to create or update workflow without `workflows` permission)"
+          # But also prevents unnecessary test runs.
+          git commit --allow-empty -m "Tagged $tag from $GITHUB_REF [skip ci]"
+
+          # Overwrite tag
+          git tag -f "$tag"
+          git push -f origin "$tag"

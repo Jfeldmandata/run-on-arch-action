@@ -35,7 +35,7 @@ jobs:
     name: Build on ubuntu-18.04 armv7
     steps:
       - uses: actions/checkout@v2.1.0
-      - uses: uraimo/run-on-arch-action@v2.0.5
+      - uses: uraimo/run-on-arch-action@v2
         name: Run commands
         id: runcmd
         with:
@@ -83,7 +83,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2.1.0
-      - uses: uraimo/run-on-arch-action@v2.0.5
+      - uses: uraimo/run-on-arch-action@v2
         name: Build artifact
         id: build
         with:
@@ -160,7 +160,7 @@ Using an invalid `arch`/`distro` combination will fail.
 
 ## Contributing
 
-New distros and archs can be added simply by creating a Dockerfile named `Dockerfile.{arch}.{distro}` (that targets an image for the desired combination) in the [Dockerfiles](https://github.com/uraimo/run-on-arch-action/blob/master/Dockerfiles) directory. Pull requests welcome!
+New distros and archs can be added simply by creating a Dockerfile named `Dockerfile.{arch}.{distro}` (that targets an image for the desired combination) in the [Dockerfiles](https://github.com/uraimo/run-on-arch-action/blob/master/Dockerfiles) directory. Pull requests welcome! Please add your changes to the `[Unreleased]` section of CHANGELOG in your pull request.
 
 ## Authors
 
